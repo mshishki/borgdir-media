@@ -1,0 +1,122 @@
+{{define "main"}}
+
+<!--
+
+<head>
+<meta charset="utf-8">
+<meta name ="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Borgdir.media - Ausleihe von Fotoequipment">
+
+<title>Profil bearbeiten - Borgdir.Media</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script defer src="/static/fontawesome-all.js"></script>
+<link href="/static/style.css" rel="stylesheet" content-type="text/css" />
+<script defer type='text/javascript' language='javascript' src="/static/functions.js"></script>
+<link href="/static/fonts.css" rel="stylesheet" content-type="text/css" />
+
+<style>
+.input{
+	color:grey;
+	font-style: italic;
+	font-size: 80%;
+margin:0px 0px -5px 0px;}
+-->
+
+
+{{if or (eq .User.ID .SelectedUser.ID) (and .User .User.IsAdmin)}}
+<main style="text-align: left">
+	<h3><i>Profil bearbeiten</i></h3>
+
+	<form method="POST" enctype="multipart/form-data">
+	<p>
+		{{if and .User .User.IsAdmin}}Kunden-ID: <span class="status-msg">{{.SelectedUser.ID}}</span> | {{else}}{{end}}
+Status: <span class="status-msg">{{.SelectedUser.Status}}</span> </p>
+		<div class="container" id="profile">
+				<div class="item item-form"><p class="input">Vorname</p>
+			<input type="text" name="firstname" value="{{ .SelectedUser.FirstName}}" class="thin-black-border btn-block" required>
+			</div>
+
+				<div class="item item-form"><p class="input">Nachname</p>
+					<input type="text" name="lastname" value="{{ .SelectedUser.LastName}}" class="thin-black-border btn-block" required>
+				</div>
+
+				<div class="item item-form"><p class="input">Benutzername</p>
+				<input type="text" name="username" value="{{ .SelectedUser.Username}}" class="thin-black-border btn-block" required>
+				</div>
+
+				<div class="item item-form"><p class="input">E-Mail</p>
+				<input type="email" name="email" value="{{ .SelectedUser.Email}}" class="thin-black-border btn-block" required>
+				</div>
+
+				<div class="item item-form"><p class="input">Passwort</p>
+				<input type="password" name="password" value="{{ .SelectedUser.Password}}" class="thin-black-border btn-block" >
+				</div>
+
+				<div class="item item-form"><p class="input">Passwort wiederholen</p>
+				<input type="password" value="{{ .SelectedUser.Password}}" name="passwordRep" class="thin-black-border btn-block">
+				</div>
+
+				<div class="item item-form"><p class="input">Bild hochladen</p>
+			<input type="file" name="picture"></div>
+
+		<div class="item item-form" style="grid-area: 6 / 1 / 6 / 3">
+				<button class="btn btn-primary thin-black-border" type="submit" style="margin-right: 50px; ">Änderungen speichern</button></form></div>
+	<!-- ka ob es doch ein teil vom div davor sein soll --->
+	<div class="item item-form">
+		{{if (eq .User.ID .SelectedUser.ID)}}
+	<a href="/profile/{{.SelectedUser.ID}}/delete" class="btn btn-danger thin-black-border" type="submit"style="margin-top: -18%; margin-left:75%; color:white!important">Konto löschen</a>
+	{{else if and .User .User.IsAdmin}}
+	<a href="{{.SelectedUser.ID}}/block" class="btn btn-danger thin-black-border" style="margin-top: -18%; margin-left:75%; color:white!important">
+		{{if (eq .SelectedUser.Status "gesperrt")}}
+		Blockierung aufheben
+		{{else}}
+		Konto sperren
+		{{end}}</a>
+	{{end}}
+	</div>
+		<div class="item item-image ">
+			<div class="item" style="grid-row-start:1; grid-row-end:5">
+			<p class="input" style="margin: 0px;">Profilbild</p>
+			<img class="img-fluid profileimg" alt="Profil von {{.SelectedUser.Username}}" style="min-width:500px!important; min-height:400px!important; object-fit:contain" src="{{.SelectedUser.PictureURL}}">
+			</div>
+		</div>
+</div>
+</main>
+{{else}}
+<!--TODO inputs = disabled-->
+<main style="text-align: left">
+
+	<h3><i>Profil von {{.SelectedUser.Username}}</i></h3>
+	<p>Status: <span class="status-msg">{{.SelectedUser.Status}}</span> </p>
+		<div class="container" id="profile">
+				<div class="item item-form"><p class="input">Vorname</p>
+			<input type="text" name="firstname" value="{{ .SelectedUser.FirstName}}" class="thin-black-border btn-block disablinput" disabled>
+			</div>
+
+				<div class="item item-form"><p class="input">Nachname</p>
+					<input type="text" name="lastname" value="{{ .SelectedUser.LastName}}" class="thin-black-border btn-block disablinput" disabled>
+				</div>
+
+				<div class="item item-form"><p class="input">E-Mail</p>
+				<input type="email" name="email" value="{{ .SelectedUser.Email}}" class="thin-black-border btn-block disablinput" disabled>
+				</div>
+
+		<div class="item item-image">
+			<div class="item" style="grid-row-start:1; grid-row-end:5">
+			<p class="input" style="margin: 0px;">Profilbild</p>
+			<img class="img-fluid profileimg" style="min-width:500px!important; min-height:400px!important; object-fit:contain" alt="Profil von {{.SelectedUser.Username}}" src="{{.SelectedUser.PictureURL}}">
+			</div>
+		</div>
+</div>
+</main>
+{{end}}
+
+<!--
+</body>
+</html>-->
+{{end}}

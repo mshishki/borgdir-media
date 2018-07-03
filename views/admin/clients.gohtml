@@ -1,0 +1,48 @@
+{{define "main"}}
+{{if and .User .User.IsAdmin}}
+<div style="text-align:left">
+	  <br>
+   <h3>Kunden</h3>
+	 
+
+  <table class="table">
+    <tr>
+      <th class="equip">Kundenname</th>
+      <th>Ausgeliehenes Equipment</th>
+      <th>Status</th>
+    </tr>
+		{{ range .UserList}}
+    <tr class="item-row">
+      <td title="Kundenname" class="equip col-md-3"><div class="row col-md-12"><div class="col-md-4 item row"> <img src="{{.PictureURL}}" alt={{.Username}}></div>
+  <div class="col-md-8" style="margin-left: 10px;">
+        <p> <strong>{{.FirstName}} {{.LastName}}</strong></p>
+        <p><i>ID:</i> {{.ID}}</p>
+        <p></div></div></td>
+
+
+      <td title="Ausgeliehenes Equipment" class="desc" style="font-size: smaller;">
+				<ul>
+				{{range .OrdersList}}
+					 	<li> #{{.ID}}: <b>Vermietet am</b>: {{.Rented}} |  	<b>Zurückzugeben am</b>: {{.Return}}
+								<ul>
+									{{range .Contains}}
+								<li> {{.OrdEq.Name}}(Nr.<i>{{.OrdEq.ID}}</i>) ({{.Quantity}} Stk.)</li>
+									{{end}}
+								</ul>
+							</li>
+					{{end}}</ul>
+		</td>
+      <td title="Status" class="td-date col-md-2">
+	      <div class="d-flex" style="justify-content: space-between;">
+		      <div class="item"><p>{{ .Status}}</div>
+		      <div class="item"><a href="../profile/{{ .ID}}" class="btn btn-danger thin-black-border" style="color:white!important"><i class="fas fa-pencil-alt" style="color:white"></i></a></div></div>
+	</td>
+	</tr>
+{{end}}
+
+  </table>
+</div>
+{{else}}
+{{template "forbidden"}}
+{{end}}
+{{end}}

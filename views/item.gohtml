@@ -1,0 +1,128 @@
+{{define "main"}}
+
+
+{{if and .User .User.IsAdmin}}
+{{/*if (eq .SelectedItem.AddedBy .User.ID)*/}}
+<main style="text-align: left">
+
+				<h3>Equipment hinzufügen</h3>
+			<form method="POST"  enctype="multipart/form-data">
+				<div id="containeradd" class="container-fluid containeradd" style="justify-content:space-around; width:fit-content">
+
+					<div id="addequip" class="container-grid addequip">
+
+						<div class="container-grid addequip" style=" width:fit-content; grid-row-start:1!important; align-items:start!important">
+					<div class="row item-form " style="display:flex!important; min-width:600px!important">
+						<div class="col-md-7 item-form"><p class="input">Bezeichnung</p><input class="thin-black-border btn-block" type="text" name="equipname" value="{{.SelectedItem.Name}}"></div>
+						<div class="col-md-5 dropdown"><p class="input" style="text-align: right">Kategorie</p>
+							<select name="category">
+								<option value="{{.SelectedItem.Category}}" selected>{{.SelectedItem.Category}}</option>
+
+								                <optgroup label="Equipment">
+								<option value="Digitalkameras">Digitalkameras</option>
+								<option value="Analogkameras">Analogkameras</option>
+
+								<option value="Objektive">Objektive</option>
+								<option value="Technik">Technik</option>
+								</optgroup>
+
+								<optgroup label="Zubehör" value="accessories">
+								<option value="Stative">Stative</option>
+								<option value="Filter">Filter</option>
+								<option value="Literatur">Literatur</option>
+								<option value="Sonstiges">Sonstiges</option>
+								</optgroup>
+								</select>
+						</div>
+					</div>
+
+					<div class="row item-form">
+
+					<div class="col-md-7 item-form"><p class="input">Inventar-Nummer</p> <input placeholder="Leer lassen, um automatisch zu generieren" value="{{.SelectedItem.ID}}" class="thin-black-border btn-block" name="equip-id" required type="number"> 	</div>
+					<div class="col-md-5 item-form"><p class="input" style="text-align: right">Lagerort</p><input  class="thin-black-border btn-block" name="storage" value="{{.SelectedItem.Storage}}" type="text"> </div>
+					</div>
+
+
+					<div class="row item-form">
+					<div class="col-md-7"><p class="input">Hinzugefügt von</p> <input value={{.SelectedItem.AddedBy}} name="addedBy" class="thin-black-border btn-block disablinput" type="text"> </div>
+					<div class="col-md-5"><p class="input" style="text-align: right">Anzahl</p> <input min="1" name="itemcount"  type="number" value="{{.SelectedItem.ItemCount}}"></div>
+				</div></div>
+
+
+					<div class="row item item-form">
+						<p class="input">Beschreibung / Hinweise für den Benutzer</p><input style="min-height:200px; min-width:600px" class="thin-black-border btn-block" name="description" type="text" value="{{.SelectedItem.Description}}"> </div>
+
+
+					<div id="equipimage" class="row item item-image equipimage" style="object-fit:contain; align-self:center!important">
+
+						<div class="item" style="grid-row-start:1; grid-row-end:5">
+
+							<img class="img-fluid img-responsive" src="{{.SelectedItem.PictureURL}}"style=" min-width:500px!important; min-height:400px!important; object-fit:contain">
+							<p class="input">Bild hochladen</p>
+						<input name="picture" type="file">
+						</div>
+
+		</div><div id="submitbutton" class="submitbutton" style="grid-column:1!important">
+
+						<button class="btn btn-primary thin-black-border" type="submit">Speichern</button>
+
+					</div></div>
+					</div>
+			</form>
+
+
+
+</main>
+{{else}}
+<main style="text-align: left">
+
+				<h3>Item #00{{.SelectedItem.ID}}</h3>
+
+				<div id="containeradd" class="container-fluid containeradd " style="justify-content:space-around; width:fit-content">
+
+					<div id="addequip" class="container-grid addequip">
+
+						<div class="container-grid addequip" style=" width:fit-content; grid-row-start:1!important; align-items:start!important">
+					<div class="row item-form flex-row" style="display:flex!important; min-width:600px!important">
+						<div class="col-md-7 item-form"><p class="input">Bezeichnung</p><input placeholder="" class="thin-black-border btn-block disablinput" type="text" name="equipname" value="{{.SelectedItem.Name}}"disabled></div>
+						<div class="col-md-5 dropdown"><p class="input" style="text-align: right">Kategorie</p>
+							<select name="sortieren-nach"  disabled>
+<option selected="selected">{{.SelectedItem.Category}}</option>
+</select>
+						</div>
+					</div>
+					<div class="row item-form">
+
+					<div class="col-md-7 item-form"><p class="input">Inventar-Nummer</p> <input  class="thin-black-border btn-block disablinput" name="equip-id" type="number" value="{{.SelectedItem.ID}}"disabled> 	</div>
+					<div class="col-md-5 item-form"><p class="input" style="text-align: right">Lagerort</p><input placeholder="" class="thin-black-border disablinput btn-block" name="storage" value="{{.SelectedItem.Storage}}"type="text" disabled> </div>
+					</div>
+
+
+					<div class="row item-form">
+					<div class="col-md-7"><p class="input">Hinzugefügt von</p> <input class="disablinput" value="{{.SelectedItem.AddedBy}}" name="addedBy" class="thin-black-border btn-block" type="text" disabled> </div>
+					<div class="col-md-5"><p class="input" style="text-align: right">Anzahl</p> <input min="1" class="disablinput" name="itemcount" value="{{.SelectedItem.ItemCount}}" type="number" disabled></div>
+				</div></div>
+
+
+					<div class="row item item-form">
+						<p class="input">Beschreibung / Hinweise für den Benutzer</p><input style="min-height:200px; min-width: 600px" class="thin-black-border disablinput  btn-block" name="description" type="text" value="{{.SelectedItem.Description}}"disabled> </div>
+
+
+					<div id="equipimage" class="row item item-image equipimage" style="object-fit:contain; align-self:center!important">
+
+						<div class="item" style="grid-row-start:1; grid-row-end:5">
+
+							<img class="img-fluid img-responsive" src="{{.SelectedItem.PictureURL}}"style=" min-width:500px!important; min-height:400px!important;  object-fit:contain">
+							<p class="input" hidden>Bild hochladen</p>
+						<input name="picture" type="file" hidden>
+						</div>
+
+		</div><div id="submitbutton" class="submitbutton" style="grid-column:1!important">
+
+
+					</div></div>
+					</div>
+
+</main>
+{{end}}
+{{end}}

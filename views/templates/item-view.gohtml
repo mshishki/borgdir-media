@@ -1,0 +1,34 @@
+{{define "item-view"}}
+<form>
+  <div class="item row">
+    <div class="col-md-8">
+      <div class="col-md-12 desc">
+        <h4>
+          {{ .Name}}
+        </h4>
+        <p>{{ .Description }}
+        </p>
+      </div>
+      <div class="row col-md-12">
+        <div class="col-md-8">
+          {{if (eq .ItemCount 0)}}
+            <a class="btn btn-primary thin-black-border" style="color:white!important" href="/equipment/reserve/{{.ID}}">Vormerken</a>
+          {{else }}
+            <a class="btn btn-primary thin-black-border" style="color:white!important" href="/equipment/add/{{.ID}}">In den Warenkorb</a>
+          {{end}}
+        </div>
+        <!-- col-md-7: button -->
+        <div class="col-md-4 status-msg">
+          {{if (eq .ItemCount 0)}}
+          entliehen
+          {{else}}
+          {{.ItemCount}} verfügbar
+          {{end}}
+        </div><!--col-md-5 : status -->
+      </div><!-- col-md-12 yellow-bg-->
+    </div><!--col-md-8-->
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/equipment/{{.ID}}"><img src="{{.PictureURL}}" alt="{{.Name}}" class="img-fluid"></a>
+    </div><!-- bild-->
+  </div></form>
+{{end}}

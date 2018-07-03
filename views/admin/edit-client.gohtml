@@ -1,0 +1,108 @@
+{{define "main"}}
+<!--
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script defer src="../../static/fontawesome-all.js"></script>
+<link href="../../static/style.css" rel="stylesheet" content-type="text/css" />
+<script type='text/javascript' language='javascript' src="../../static/functions.js"></script>
+<link href="../../static/fonts.css" rel="stylesheet" content-type="text/css" />
+
+<style>
+	#profile {
+	justify-content: space-between;
+	display:grid;
+	grid-template-rows: auto;
+	grid-template-columns: 400px 400px auto;
+	text-align: left;
+	grid-gap:20px 60px;
+	grid-auto-flow:row;
+	margin-left:-20px;}
+
+img {width: 90%;
+	float:right;
+	margin-bottom:5%;;
+}
+.item-image {
+text-align: right;
+	grid-column-start:2;
+	grid-row-start:1;
+	grid-row-end:6;
+	grid-column-end:2;
+align-self: flex-start;
+}
+
+.item-form{
+	grid-column-start:1;
+	grid-column-end:1;
+}
+.item-footer {
+		margin-top: 50px;
+}
+
+
+.input{
+	color:grey;
+
+	font-style: italic;
+	font-size: 80%;
+margin:0px 0px -5px 0px;}
+
+</style> -->
+{{if and .User .User.IsAdmin}}
+
+<main style="text-align: left">
+	<h3><i>Profil bearbeiten</i></h3>
+	<p>Kunden-ID: <span class="status-msg">{{ .ID}}</span> | Status: <span class="status-msg">{{ .Status}}</span></p>
+
+		<div class="container" id="profile">
+<form method="POST">
+		<div class="item item-form"><p class="input">Vorname</p>
+	<input type="text" name="firstname" value="{{ .FirstName}}" class="thin-black-border btn-block" required>
+	</div>
+
+		<div class="item item-form"><p class="input">Nachname</p>
+			<input type="text" name="lastname" value="{{ .LastName}}" class="thin-black-border btn-block" required>
+		</div>
+
+		<div class="item item-form"><p class="input">Benutzername</p>
+		<input type="text" name="username" value="{{ .Username}}" class="thin-black-border btn-block" required>
+		</div>
+
+		<div class="item item-form"><p class="input">E-Mail</p>
+		<input type="email" name="email" value="{{ .Email}}" class="thin-black-border btn-block" required>
+		</div>
+
+		<div class="item item-form"><p class="input">Passwort</p>
+		<input type="password" name="password" value="{{ .Password}}" class="thin-black-border btn-block" required>
+		</div>
+
+		<div class="item item-form"><p class="input">Passwort wiederholen</p>
+		<input type="password" value="{{ .Password}}" class="thin-black-border btn-block" required>
+		</div>
+
+		<div class="item item-form"><p class="input">Bild hochladen</p>
+	<input type="URL" value="{{ .PictureURL}}" name="picture" class="thin-black-border btn-block" required>
+		</div>
+<p style="color:grey;">--------------------------------------------</p>
+		<div class="item item-form" style="grid-area: 6 / 1 / 6 / 3">
+				<button class="btn btn-primary thin-black-border" type="submit" style="margin-right: 50px">Änderungen speichern</button></form>
+	<form method="PATCH"><button class="btn btn-danger thin-black-border" style="margin-top: -18%; margin-left:75%;">Konto sperren</button></form></div>
+
+		<div class="item item-image">
+			<div class="item" style="grid-row-start:1; grid-row-end:6">
+			<p class="input" style="margin: 0px;">Profilbild</p>
+			<img class="img-fluid" alt="" src="{{.PictureURL}}">
+			<input type="text" placeholder="" class="thin-black-border" required></div>
+
+		</div>
+</div>
+
+</main>
+{{else}}
+{{template "forbidden"}}
+{{end}}
+{{end}}

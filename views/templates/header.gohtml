@@ -1,0 +1,41 @@
+{{ define "header" }}
+<header>
+{{if (ne .User.Username "") }}
+	{{if and .User .User.IsAdmin}}
+	<div class="row d-flex align-items-center" style="margin-bottom: 5%;justify-content: space-between">
+
+			<div><span class="logo"><a href="../">borgdir.media</a></span></div>
+			<div style="font-size: 1.5vw"><a href="/admin/equipment">Equipment</a> | <a href="/admin/clients">Kunden</a> | <a href="/logout">Logout</a></div>
+			<div class="d-flex align-items-center" style="justify-content: flex-end; flex-direction: row">
+				<div><i class="fas fa-shopping-cart fa-lg" style="justify-content: flex-end" href="/cart"></i> </div>
+				<div style="text-align: right; flex-direction: column; margin: -3vw 0px -3vw 2vw">
+					<div><b>{{.User.FirstName}} {{ .User.LastName}}</b></div>
+					<div class="status-msg">Verleiher</div>
+				</div>
+			<div><a href="/profile/{{.User.ID}}"><img class="thin-black-border" src="../..{{.User.PictureURL}}" alt="Profil bearbeiten" style="height: 3.5vw; width:3.5vw; margin-left: 1vw; border-radius: 50%"></a></div>
+			</div>
+	</div>
+	{{else}}
+	<div class="row d-flex align-items-center" style="margin-bottom: 5%;justify-content: space-between">
+			<div><span class="logo"><a href="../">borgdir.media</a></span></div>
+			<div style="font-size: 1.5vw"><a href="/equipment">Equipment</a> | <a href="/my-equipment">Meine Geräte</a> | <a href="/logout">Logout</a></div>
+			<div class="d-flex align-items-center" style="justify-content: flex-end; flex-direction: row">
+				<div><a href="/cart"><i class="fas fa-shopping-cart fa-lg" style="justify-content: flex-end"></i></a> </div>
+				<div style="text-align: right; flex-direction: column; margin: -3vw 0px -3vw 2vw">
+					<div><b>{{.User.FirstName}} {{ .User.LastName}}</b></div>
+					<div class="status-msg">Benutzer </div>
+				</div>
+			<div><a href="/profile/{{ .User.ID}}"><img class="thin-black-border" src="{{.User.PictureURL}}" alt="Profil bearbeiten" style="height: 3.5vw; width:3.5vw; margin-left: 1vw; border-radius: 50%"></a></div>
+			</div>
+	</div>
+	{{end}}
+{{else}}
+	<div class="row" style="margin-bottom: 5%">
+		<div class="col-md-10 d-flex align-items-baseline">
+		<a class="logo" href="../">borgdir.media</a>
+			<div style="font-size: 1.5vw;"><a href="/equipment">Equipment</a> | <a href="/login">Login</a></div></div>
+		<div class="col-md-1 d-flex align-items-center" style="justify-content: flex-end"><a href="/cart"><i class="fas fa-shopping-cart fa-lg"></i></a>
+		</div></div>
+{{ end }}
+</header>
+{{end}}

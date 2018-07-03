@@ -1,0 +1,54 @@
+{{define "main"}}
+{{$user := .User}}
+
+{{if .SeshItems}}
+
+<form method="POST" action="/cart/order" name="ausleihecart" id="ausleihecart">
+<div style="text-align:left">
+
+  <h3>Warenkorb</h3>
+  <table class="table"><thead>
+    <tr>
+      <th class="equip">Equipment</th>
+      <th>Beschreibung</th>
+      <th>Anzahl</th>
+      <th>Rückgabe bis</th>
+      <th style="justify-content: center">Löschen</th>
+    </tr></thead>
+		<tbody>
+{{range .SeshItems}}
+<!--TODO onclick img: Redirect auf die Equipmentseite, onclick bei anzahl: erhöhen, onclick bei delete: raus aus der datenbank + erneuern, onclick bei Ausleihen: submit-->
+			<tr class="item-row">
+				<td title="Equipment" class="equip"><div class="row col-md-12"><div class="col-md-4 item row"> <img src="{{ .Item.PictureURL}}" alt=# onclick=></div>
+		<div class="col-md-8" style="margin-left:10px">
+					<p> <strong>{{ .Item.Name}}</strong></p>
+					<p><i>Inv.-Nr.:</i> {{ .Item.ID}}</p></div></div></td>
+				<td title="Beschreibung">{{ .Item.Description}}</td>
+				<td title="Anzahl"><input type="number" min="1" max="{{.Item.ItemCount}}" value="1" name="quantity">
+					</td>
+			<td title="Rückgabe bis"><p class="td-date">{{.Date}}</p></td>
+			<td title="Löschen" style="text-align: center; display:block">
+        <a href="/cart/delete/{{.Item.ID}}" class="btn btn-danger thin-black-border" style="padding:0px 1vw; color:white!important">
+          <i class="fas fa-trash-alt"></i></a>
+        </td>
+			</tr>
+			{{end}}
+    </tbody>
+  </table>
+</div>
+<div style="text-align: right">
+{{if (ne $user.Username "") }}<button class="btn btn-primary thin-black-border" type="submit" form="ausleihecart">Jetzt ausleihen</button>{{else}}
+  <p>Sie sind im Moment nicht eingeloggt.</p>
+  <p><a href="/login" style="color:#ff7f50!important"><b>Melden Sie sich an</b></a> oder legen Sie sich <a href="/register" style="color:#ff7f50!important"><b>ein neues Konto</b></a> an, um fortzufahren.</p>
+{{end}}
+</div>
+
+
+</div>
+</form>
+{{else}}
+ <div style="text-align:center">
+<p>Der Warenkorb ist leer. </p>
+<a href="/equipment" class="btn btn-primary thin-black-border" style="color:white!important">Zur Equipment-Suche</a></div>
+{{end}}
+{{end}}

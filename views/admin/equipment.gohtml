@@ -1,0 +1,52 @@
+{{define "main"}}
+{{if and .User .User.IsAdmin}}
+
+<div style="text-align:left">
+  <h3>Equipment verwalten</h3>
+
+
+  <div class="row d-flex col-md-5" style="justify-content: space-evenly"><div class="item"><a href="../equipment/new" class="btn btn-primary thin-black-border" style="color:white!important"><i class="fas fa-plus"></i></a></div><div class="item col-md-10"><form method="POST" class="thin-black-border">
+    <input type="text" style="border-width:0px; margin-left: 10px; background: transparent;" name="search" placeholder="Suche.." required>
+  </form></div></div>
+
+
+  <table class="table">
+    <tr>
+      <th class="equip">Equipment</th>
+      <th>Beschreibung</th>
+      <th>Status</th>
+    </tr>
+      {{range .EquipmentItems}}
+
+    <tr class="item-row">
+      <td title="Equipment" class="equip col-md-3">
+	    <div class="row col-md-12">
+		      <div class="col-md-4 item row"> <img src="../..{{.PictureURL}}" alt="{{.Name}}" style="object-fit:contain"></div>
+			       <div class="col-md-8" style="margin-left: 5px;">
+			            <p> <strong>{{.Name}} ({{.ItemCount}})</strong></p>
+			               <p style="font-size:2.5vh"><i>Inv.-Nr.:</i> {{.ID}} | {{.Category}}</p>
+                     <p>Lagerort: <span class="status-msg">{{.Storage}}</span></p>
+              </div>
+		    </div>
+		</td>
+
+
+      <td title="Beschreibung" class="desc col-md-6"><p style="max-height:0.5vw!important">{{.Description}}</p></td>
+      <td title="Status" class="col-md-12 d-flex align-content-start flex-wrap" style="justify-content: stretch">
+	      <div class="item col-md-8 desc" style="font-size:2.5vh">
+          {{if .Ordered }}
+          {{range .Ordered}}<ol>
+<li value={{.ID}}>          <p>User #<a href="../../profile/{{.MadeBy}}"><b>{{.MadeBy}}</b></a>, Rückgabe am <text class="td-date">{{.Return}}</p></li></ol>
+          {{end}}
+          {{else}}<p><i>Im Moment nicht entliehen</i></p>{{end}}</div>
+	      <div class="item col-md-2"><p><a href="/equipment/{{.ID}}/delete" class="btn btn-danger thin-black-border" style="max-width:30px!important; padding:none!important; display:flex;justify-content:center; text-align:center"><i class="fas fa-trash-alt" style="color:white; align-self:center"></i></a></p>
+	      <p><a href="/equipment/{{.ID}}" class="btn btn-danger thin-black-border"style="max-width:30px!important; padding:none!important; display:flex;justify-content:center; text-align:center"><i class="fas fa-pencil-alt" style="color:white;align-self:center; margin: 0px -15px;"></i></a></p></div>
+	      </td>
+       </tr>
+       {{end}}
+  </table>
+</div>
+{{else}}
+{{template "forbidden"}}
+{{end}}
+{{end}}

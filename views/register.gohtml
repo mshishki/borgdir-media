@@ -1,0 +1,30 @@
+{{define "main"}}
+	{{if .SeshFlashes}}
+	{{ template "flashes" .}}
+	{{else}}
+	{{end}}
+
+<div class="container" id="registration">
+	<div class="item item-header" style="grid-row-start:1">
+	<h3>Noch kein Kunde von uns?</h3>
+	</div>
+
+<form class="item item-form" style="grid-row-start:2" method="post">
+	<div class="item item-form"><p class="input">Vorname</p>
+	<input type="text" name="firstNameReg" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+	<div class="item item-form"><p class="input">Nachname</p>
+	<input type="text" name="lastNameReg" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+	<div class="item item-form"><p class="input">Benutzername</p>
+	<input type="text" name="usernameReg" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+	<div class="item item-form"><p class="input">E-Mail</p>
+	<input type="email" name="emailReg" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+	<div class="item item-form"><p class="input">Passwort</p>
+	<input type="password" name ="passwordReg" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+	<div class="item item-form"><p class="input">Passwort wiederholen</p>
+	<input type="password" name="passwordRep" class="thin-black-border btn-block txt-field" required></div>
+<p></p>
+	<div class="item item-footer" style="text-align:center!important; width:80%; margin-right: auto; margin-left:auto;"><button class="btn btn-block btn-primary thin-black-border" type="submit" style=" text-align:center!important">Registrieren</button>	</div>
+
+</form>
+</div>
+{{end}}

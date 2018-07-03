@@ -1,0 +1,44 @@
+{{define "main"}}
+
+      <div class="container-fluid">
+
+        <div style="text-align: left">
+          <h3>Equipment</h3>
+
+          <div class="row"
+          style="flex-direction:row-reverse; align-items: flex-end">
+          <form method="POST" action="">
+              <select class="thin-black-border" name="kategorie" style="width: 10em; min-height:7vh; padding-top:5px">
+                <option value="">Alle Kategorien</option>
+
+                <optgroup label="Equipment">
+<option value="Digitalkameras">Digitalkameras</option>
+<option value="Analogkameras">Analogkameras</option>
+
+<option value="Objektive">Objektive</option>
+<option value="Technik">Technik</option>
+</optgroup>
+
+<optgroup label="Zubehör" value="accessories">
+<option value="Stative">Stative</option>
+<option value="Filter">Filter</option>
+<option value="Literatur">Literatur</option>
+<option value="Sonstiges">Sonstiges</option>
+</optgroup>
+</select>
+          <!--  </div> -->
+            <div class="col-md-8">
+            <input
+             class="selectpicker thin-black-border" style="padding-left: +10px; background: transparent; align-content:normal; width: 20em; height:7vh" name="search" placeholder="Suche.."></form>
+            </div>
+          </div>
+
+          <div class="container-grid" style="text-align: left; margin-top: 15px;">
+            {{range .EquipmentItems}}
+            {{template "item-view" .}}
+            {{end}}
+          </div>
+        </div><!--bestand-->
+      </div><!--container-fluid-->
+
+{{end}}

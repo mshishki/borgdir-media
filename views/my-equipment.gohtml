@@ -1,0 +1,73 @@
+{{define "main"}}
+
+<div style="text-align:left">
+  <h3>Meine Geräte</h3>
+  {{if .User.OrdersList}}
+  <table class="table d-flex">
+    <tr>
+      <th class="equip">Equipment</th>
+      <th>Beschreibung</th>
+      <th>Entliehen am</th>
+      <th>Rückgabe bis</th>
+      <th>Verlängern</th>
+    </tr>
+{{range .User.OrdersList}}
+{{$return := .Return}}
+{{$rented := .Rented}}
+
+{{range .Contains}}
+    <tr class="item-row">
+			<form method="post" action="/my-equipment/extend">
+      <td title="Equipment" class="equip col-md-3"><div class="row col-md-12"><div class="col-md-4 item row"> <img src="{{ .OrdEq.PictureURL }}" alt=#></div>
+  <div class="col-md-8" style="margin-left: 10px;">
+        <p> <strong>{{.OrdEq.Name}}</strong></p>
+        <p>Inv.-Nr.:<input type="number" style="outline:none" value="{{.OrdEq.ID}}" name="equip-id" hidden>{{.OrdEq.ID}}</p></div></div></td>
+      <td title="Beschreibung" class="desc col-md-4"><p>Anzahl:<b><input type="number" style="outline:none" value="{{.Quantity}}" name="quantity" hidden> {{.Quantity}}</b> Stk. </p><p>{{.OrdEq.Description}}</p></td>
+      <td title="Entliehen am"> {{$rented}}</td>
+      <td title="Rückgabe bis" class="td-date col-md-1"><input type="text" style="outline:none" value="{{$return}}" name="return" hidden> {{ $return}}</td>
+      <td title="Verlängern" class="col-md-1"><button class="btn btn-primary thin-black-border" type="submit" style="">Verlängern</button></td>
+{{end}}
+	</form>  </tr>
+{{end}}
+</table>
+{{else}}
+<div style="text-align:center">
+<p>Sie haben noch keine Bestellungen gemacht. </p>
+<a href="/equipment" class="btn btn-primary thin-black-border" style="color:white!important">Zur Equipment-Suche</a></div>
+{{end}}
+
+  <br>
+   <h3>Vorgemerkt</h3>
+   {{if .SeshItems}}
+  <table class="table">
+    <tr>
+      <th class="equip">Equipment</th>
+      <th>Beschreibung</th>
+      <th>Rückgabe vsl.</th>
+      <th>Entfernen</th>
+    </tr>
+		{{range .SeshItems}}
+    <tr class="item-row">
+      <td title="Equipment" class="equip col-md-3"><div class="row col-md-12"><div class="col-md-4 item row"> <img src="{{.Item.PictureURL}}" alt=#></div>
+  <div class="col-md-8" style="margin-left: 10px;">
+        <p> <strong>{{.Item.Name}}</strong></p>
+        <p>Inv.-Nr.: {{.Item.ID}}</p></div></div></td>
+        {{if (eq .Item.ItemCount 0) }}
+<td title="Beschreibung" class="desc col-md-5"><p>{{.Item.Description}}</p></td>
+      <td title="Rückgabe bis" class="td-date col-md-1">{{.Date}}</td>
+      <td title="Entfernen" class="col-md-1"><a href="/my-equipment/delete/{{.Item.ID}}"class="btn btn-primary thin-black-border" style="color:white!important">Entfernen</button>
+        {{else}} <td title="Beschreibung" class="desc col-md-5"><p>{{.Item.Description}}</p></td>
+              <td title="Rückgabe bis" class="td-date col-md-1"><p style="font-weight:bold; color:red">Jetzt verfügbar!</p></td>
+              <td title="Entfernen" class="col-md-1"><a href="/equipment/add/{{.Item.ID}}" class="btn btn-primary thin-black-border" style="color:white!important">Ausleihen</button>
+                {{end}}{{end}}
+</td>
+    </tr>
+  </table>
+  {{else}}
+  <div style="text-align:center">
+
+  <p>Sie haben keine vorgemerkten Geräte. </p>
+  <a href="/equipment" class="btn btn-primary thin-black-border" style="color:white!important">Zur Equipment-Suche</a> </div>
+  {{end}}
+</div>
+{{end}}

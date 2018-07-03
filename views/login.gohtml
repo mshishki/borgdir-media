@@ -1,0 +1,19 @@
+{{define "main"}}
+
+	<div class="item item-header">
+	<h3>Login</h3>
+	</div>
+	{{/* .Flash-Cookie follows  #*/}}
+	<div id="login">
+
+	<form  method="post" style="display:block;">
+	<div class="item"><label for="username-login" class="input">Benutzername</label>
+	<input type="text" id="username-login" name="usernameLog" placeholder="" class="thin-black-border btn-block txt-field" required></div>
+<p></p>
+	<div class="item item-form"><label for="pwd-login" class="input">Passwort</label>
+	<input type="password" id="pwd-login" name="passwordLog"placeholder="" class="thin-black-border btn-block txt-field" required></div>
+<p></p>
+	<div class="item item-footer" style="text-align:center!important; width:80%; margin-right: auto; margin-left:auto;"><button class="btn btn-block btn-primary thin-black-border" type="submit" style=" text-align:center!important">Anmelden</button>	</div>
+	</form>
+</div>
+{{end}}

@@ -1,0 +1,57 @@
+{{define "main"}}
+
+	<div class="item item-header" style="margin-bottom: 5%">
+	<h3 style="margin-bottom:0px">Willkommen bei</h3>
+	<p class="logo" style="font-size: 50px; margin-top: -15px">borgdir.media</p>
+	</div>
+	{{if (eq .User.Username "")}}
+
+	<div class="row" style="justify-content:center; margin: auto;">
+	<div class="col-md-3">
+			<form action="/login">
+			<button class="btn btn-primary btn-block thin-black-border" style="font-size: larger; padding: 3px 7px">Login</button></form>
+		</div>
+
+		<div class="col-md-3">
+			<form action="/register">
+			<button class="btn btn-primary btn-block thin-black-border" style="font-size: larger; padding: 3px 7px">Registrieren</button></form> <!-- button type: ??? -->
+		</div>
+	</div>
+{{else}}
+{{end}}
+<div class="container">
+    <div class="row" style="margin-top: 5%;  border-style: dotted">
+		  <div class="col-md-12" style="overflow: hidden;">
+        <div id="Carousel" class="carousel slide">
+                <!-- Carousel items -->
+                <div class="carousel-inner" style="height: 250px;align-content: center;">
+
+                <div class="item active">
+	                <!-- TODO: Bilder vertikal zentrieren -->
+                	<div class="row d-flex align-items-center">
+                    {{range .EquipmentItems}}
+
+                	  <div class="col-md-3"><a href="/equipment/{{.ID}}"><img src="{{ .PictureURL}}" class="img-fluid" alt="{{.Name}}"></a></div>
+                    {{end}}
+
+                	</div><!--.row-->
+                </div><!--.item-->
+
+                <div class="item">
+                	<div class="row d-flex align-items-center" style="align-content: space-between; align-items: center">
+										{{range .MoreItems}}
+
+										<div class="col-md-3"><a href="/equipment/{{.ID}}"><img src="{{ .PictureURL}}" class="img-fluid" alt="{{.Name}}"></a></div>
+										{{end}}
+                	</div><!--.row-->
+                </div><!--.item-->
+                </div><!--.carousel-inner-->
+                  <a data-slide="prev" href="#Carousel" class="left carousel-control" style="background: none;"><i class="fas fa-angle-left fa-2x"></i></a>
+                  <a data-slide="next" href="#Carousel" class="right carousel-control" style="background: none"><i class="fas fa-angle-right fa-2x"></i></a>
+                </div><!--.Carousel-->
+
+		    </div>
+	  </div>
+</div><!--.container-->
+
+{{end}}

@@ -1,0 +1,25 @@
+{{define "main"}}
+
+
+{{if and .User .User.IsAdmin}}
+
+<h1>Administrationsbereich</h1>
+<br>
+<div class="row" style="justify-content:center; align-items: baseline;">
+
+	<div class="col-md-4">
+		<i class="fas fa-clipboard-list" style="font-size: 300px"></i>
+		<p></p>
+		<a href="equipment" class="btn btn-primary thin-black-border" style="font-family: Roboto!important; color:white !important"> Equipment-Verwaltung</a>
+	</div>
+
+	<div class="col-md-4"> <i class="fas fa-users" style="font-size: 300px"></i>
+		<p></p>
+		<a href="clients" class="btn btn-primary thin-black-border" style="font-family: Roboto!important; color:white !important">Kunden-Verwaltung</a>
+ 	</div>
+
+</div>
+{{else}}
+{{template "forbidden"}}
+{{end}}
+{{end}}
