@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
+	_ "github.com/mattn/go-sqlite3"
 	"golang.org/x/crypto/bcrypt"
 )
 

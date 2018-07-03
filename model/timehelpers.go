@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func TodaysDate() string { //for renting equipment / registration purposes
